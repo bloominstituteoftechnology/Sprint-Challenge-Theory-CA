@@ -21,7 +21,7 @@ You have three hours to complete this challenge. Plan your time accordingly.
 In this challenge, you will...
 1. Write 3 regular expressions for specific tasks 
 2. Design 2 state machine diagrams
-3. Create a variant of Conway's Game of Life
+3. Finish implementing a one dimensional cellular automaton
 
 ## Self-Study/Essay Questions
 
@@ -85,19 +85,13 @@ You are expected to be able to answer all these questions. Your responses contri
 
 > This is an implementation of Wolfram's [Rule 126](http://mathworld.wolfram.com/Rule126.html).
 
+![126](https://tk-assets.lambdaschool.com/7220f917-2fe3-4487-88df-f3cb75a0dcb0_126.gif)
+
 Follow these steps to set up your project:
 
-* You'll need to complete the `getNewVal()` function in `1d-life.js`.
-  * This is a standalone, vanilla (non-React) web page. You should be able to open the `index.html` file in your browser and see the result. (Before you complete your implementation, the image should show as all black).
+* The starter code currently draws the first row of the automata.
+* You'll need to complete the `get_new_val()` function in `1d-life.py` to update subsequent rows.
 
-* If there are issues opening the `index.html` file directly, you can also run a Python web browser on port 8000 from the command line:
-
-```
-cd 1d-life/src
-python -m SimpleHTTPServer
-```
-
-* Then navigate to `http://localhost:8000` to see the app.
 
 ## Minimum Viable Product
 
@@ -117,26 +111,22 @@ on.
 
 ### Algorithm
 
-Everything is written for you except the code in `getNewVal()`. This
-function accepts a 1D array of the current life status, and an `x`
-coordinate into that array.
+Everything is written for you except the code in `get_new_val()`. This
+function accepts a list of the current life status, and the previous generation (integer). You can then use that generation value to analyze the correct row (indices) in the list.
 
-It should return `0` if the cell at that `x` should become dead, and
-should return `1` if it should be alive next generation.
+The function should return a new list with correct values added to the next row that indicate which cells are now alive or dead.
 
 Whether or not the cell should remain alive or die depends on the
 results of the calculation of [Rule 126](#rule-126), that you will
 implement, below.
 
-The remaining, existing code sets up a canvas, loops through the
-generations, manages the double-buffered life status, etc.
 
 ## Rule 126
 
 This rule describes how cells live and die based on their own values,
 and that of their immediate neighbors.
 
-For example, if a cell is dead, and its immediate neighbors are alive,
+For example, if a cell is dead (.), and its immediate neighbors are alive (#),
 that pattern of 3 cells is:
 
 ```
